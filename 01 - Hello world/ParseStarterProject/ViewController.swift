@@ -7,8 +7,50 @@
 import UIKit
 import Parse
 
-class ViewController: UIViewController {
+/**
+    UINavigationControllerDelegate -> controls another app and put the focus on our own
+    UIImagePickerControllerDelegate -> controlls the picking image from library or camera
+**/
+class ViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
+    @IBOutlet var importedImage: UIImageView!
+    
+    /**
+        Defines what happen after the user picked an image
+    **/
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        // Dismiss the picking image view.
+        self.dismissViewControllerAnimated(true, completion: nil)
+        importedImage.image = image
+        
+    }
+    
+    
+    @IBAction func importPhotoStream(sender: UIButton) {
+        
+        var image = UIImagePickerController()
+        image.delegate = self
+        image.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        image.allowsEditing = true
+        
+        self.presentViewController(image, animated: true, completion: nil)
+        
+    }
+    
+    
+    @IBAction func importCamera(sender: UIButton) {
+        
+        var image = UIImagePickerController()
+        image.delegate = self
+        image.sourceType = UIImagePickerControllerSourceType.Camera
+        image.allowsEditing = true
+        
+        self.presentViewController(image, animated: true, completion: nil)
+        
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -28,9 +70,10 @@ class ViewController: UIViewController {
         // enchiladas ID: bkvKUZRMaF
         
         
+        // Query an item by it´s ID and EDIT the item
+        /*
         var query = PFQuery(className: "Products")
         
-        // Query an item by it´s ID and EDIT the item
         query.getObjectInBackgroundWithId("bkvKUZRMaF", block: {(object: PFObject?, error: NSError? ) -> Void in
             
             if error != nil{
@@ -45,7 +88,7 @@ class ViewController: UIViewController {
             }
             
         })
-        
+        */
         
         
         // Query an item by it´s ID
