@@ -15,6 +15,8 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
 
     @IBOutlet var importedImage: UIImageView!
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
     /**
         Defines what happen after the user picked an image
     **/
@@ -49,6 +51,35 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         
     }
     
+    
+    @IBAction func pauseButton(sender: AnyObject) {
+        
+        activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0, 0, 50, 50))
+        activityIndicator.center = self.view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        //UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+    }
+    
+    @IBAction func restoreButton(sender: AnyObject) {
+        activityIndicator.stopAnimating()
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+    }
+    
+    
+    @IBAction func alertButton(sender: AnyObject) {
+        
+        var alert = UIAlertController(title: "Título", message: "Descripción", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Ok!", style: .Default, handler: {(action) -> Void in
+                self.dismissViewControllerAnimated(true, completion: nil)
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+    }
     
     
     override func viewDidLoad() {
